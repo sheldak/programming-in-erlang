@@ -12,6 +12,7 @@
 %% API
 -export([createMonitor/0, addStation/3, addValue/5, removeValue/4, getOneValue/4, getStationMean/3, getDailyMean/3,
          getStationWithTheMostMeasurements/1, getNearestStation/2]).
+-include_lib("eunit/include/eunit.hrl").
 
 
 %%                                     ----- Structure of the Monitor -----
@@ -185,7 +186,7 @@ getNearerCoords({X, Y}, {X1, Y1}, {X2, Y2}) ->
 getNearestStation({X, Y}, Monitor) ->
   case maps:is_key({X, Y}, Monitor) of
     true -> case maps:size(Monitor) of
-              0 -> error(just_one_station);
+              1 -> error(just_one_station);
               _ -> OtherStations = maps:remove({X, Y}, Monitor),
                    [{StartKey, _V} | _T] = maps:to_list(OtherStations),
                    maps:fold(fun(Key, _V, Best) -> getNearerCoords({X, Y}, Best, Key) end, StartKey, OtherStations)
