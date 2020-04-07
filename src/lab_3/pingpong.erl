@@ -12,15 +12,18 @@
 %% API
 -export([start/0, init/0, stop/0, play/1]).
 
+%% starting two processes: one with alias "ping" and one with alias "pong"
 start() ->
   PidPing = spawn(?MODULE, init, []),
   PidPong = spawn(?MODULE, init, []),
   register(ping, PidPing),
   register(pong, PidPong).
 
+%% initializing process loop
 init() ->
   loop(0).
 
+%% receiving and sending signals between processes ping and pong
 loop(Sum) ->
   receive
     {play, N} ->
@@ -49,12 +52,15 @@ loop(Sum) ->
     20000 -> terminate()
   end.
 
+%% ending process running
 terminate() ->
   ok.
 
+%% starting exchanging N messages between ping and pong
 play(N) ->
   ping ! {play, N}.
 
+%% terminating both processes
 stop() ->
   ping ! stop,
   pong ! stop.
