@@ -123,7 +123,7 @@ getOneValue(Name, Date, Type, Monitor) ->
   end.
 
 
-%% getting mean value of all measurements at the station (given by Name or coordinates ({X, Y}) of given Type
+%% getting mean value of all measurements at the station (given by Name or coordinates ({X, Y}) of given Type)
 %% in case of non-existence of station, function creates error
 %% in case of zero measurements, function returns 0
 getStationMean({X, Y}, Type, Monitor) ->
